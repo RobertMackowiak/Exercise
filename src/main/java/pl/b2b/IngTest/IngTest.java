@@ -31,13 +31,13 @@ public class IngTest {
     @Test
     public void transferTest(){
         mainPage.chooseTransactionButton();
-//        transactionOptionPage.chooseHolidaysButton();
-//        transactionDetails.copyAccountNumber();
-//        transactionDetails.chooseNormalTransactionButton();
-//        transactionDetails.fillRecipientAddress();
-//        transactionDetails.fillTransactionAmount();
-//        transactionDetails.fillTransactionTitle();
-//        transactionDetails.chooseNextButton();
+        transactionOptionPage.chooseHolidaysButton();
+        transactionDetails.copyAccountNumber();
+        transactionDetails.chooseNormalTransactionButton();
+        transactionDetails.fillRecipientAddress();
+        transactionDetails.fillTransactionAmount();
+        transactionDetails.fillTransactionTitle();
+        transactionDetails.chooseNextButton();
     }
 
 }
