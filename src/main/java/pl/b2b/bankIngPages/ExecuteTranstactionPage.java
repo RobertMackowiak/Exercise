@@ -7,7 +7,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import pl.b2b.SingletonWebdriver;
 
 public class ExecuteTranstactionPage {
-//    String accNumber = "79 1050 0028 2100 0023 0315 0007";
 String accNumber;
     public ExecuteTranstactionPage() {
         PageFactory.initElements(SingletonWebdriver.getDriver(), this);
