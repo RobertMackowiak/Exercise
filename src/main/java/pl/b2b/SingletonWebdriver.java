@@ -7,22 +7,25 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SingletonWebdriver {
 
-    WebDriver driver;
-    WebDriverWait wait;
+    private static WebDriver driver;
+    private static WebDriverWait wait;
 
-    public WebDriver getDriver() {
+    public static WebDriver getDriver() {
         if (driver == null) {
-            System.setProperty(GeckoDriverService.GECKO_DRIVER_EXE_PROPERTY, "C:/SeleniumDrivers/geckodriver.exe");
+//            System.setProperty(GeckoDriverService.GECKO_DRIVER_EXE_PROPERTY, "C:/SeleniumDrivers/geckodriver.exe");
+            System.setProperty("webdriver.gecko.driver", "C:/SeleniumDrivers/geckodriver.exe");
             driver = new FirefoxDriver();
             driver.manage().window().maximize();
         }
         return driver;
     }
 
-    public WebDriverWait getWait() {
+    public static WebDriverWait getWait() {
         if (wait == null) {
-            wait = new WebDriverWait(driver, 10);
+            wait = new WebDriverWait(driver, 15);
         }
         return wait;
     }
+
+
 }
