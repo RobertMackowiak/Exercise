@@ -1,0 +1,18 @@
+<suite name = "ING">
+    <test name = "BankTest">
+
+        <classes>
+
+            <class name = "pl.b2b.BankTest"/>
+
+            <methods>
+
+                <include name = "bankTest1"/>
+
+            </methods>
+
+        </classes>
+
+    </test>
+
+</suite>
