@@ -10,7 +10,7 @@ public class TransactionPage {
     public TransactionPage() {
         PageFactory.initElements(SingletonWebdriver.getDriver(), this);
     }
-    @FindBy(xpath = "//li[@class=\"tile_icon tile_icon--small glyphicon-ing type-icon glyphicon-ing-transactions\"]")
+    @FindBy(xpath = "//i[@class=\"tile_icon tile_icon--small glyphicon-ing type-icon glyphicon-ing-transactions\"]")
     private WebElement regularTransfer;
 
     public void chooseRegularTransfer() {

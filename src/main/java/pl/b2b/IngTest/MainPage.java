@@ -12,11 +12,21 @@ public class MainPage {
         PageFactory.initElements(SingletonWebdriver.getDriver(), this);
     }
 
+    @FindBy(id="page-loader-overlay-region")
+    private WebElement loader;
+
+    @FindBy(xpath = "//div[@class=\"demo-curtain\"]")
+    private WebElement curtain;
+
+
     @FindBy(id="menu-transactions")
     private WebElement transactions;
 
 
     public void clickTransactionButton() {
+        SingletonWebdriver.getWait().until(ExpectedConditions.invisibilityOf(loader));
+        SingletonWebdriver.getWait().until(ExpectedConditions.visibilityOf(curtain));
+        SingletonWebdriver.getWait().until(ExpectedConditions.elementToBeClickable(transactions));
         transactions.click();
     }
 }

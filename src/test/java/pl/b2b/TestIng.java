@@ -21,14 +21,17 @@ public class TestIng {
 
         SingletonWebdriver.getDriver().get("https://login.ingbank.pl/mojeing/demo/#home");
     }
-    @AfterTest
-    public void afterTest(){SingletonWebdriver.getDriver().quit();
-    }
 
     @Test
     public void TestIng(){
-
         mainPage.clickTransactionButton();
+        chooseAccountPage.accountNrComparison();
+        chooseAccountPage.clickVacationAccountButton();
+        transactionPage.chooseRegularTransfer();
+        detailsPage.putNameAndAddress();
+        detailsPage.putAmount();
+        detailsPage.putTitle();
+        detailsPage.clickNext();
 
 
     }

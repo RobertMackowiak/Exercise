@@ -7,11 +7,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import pl.b2b.SingletonWebdriver;
 
 public class ChooseAccountPage {
+
     public ChooseAccountPage() {
         PageFactory.initElements(SingletonWebdriver.getDriver(), this);
     }
 
-    @FindBy(xpath = "//p[contains(text(),'Cel: Wakacje')]/parent::div/p[2]/")
+    @FindBy(xpath = "//p[contains(text(),'Cel: Wakacje')]/parent::a/div[3]/p[3]")
     private WebElement vacationAccount;
 
     public String accountNrComparison() {
@@ -25,5 +26,6 @@ public class ChooseAccountPage {
         SingletonWebdriver.getWait().until(ExpectedConditions.elementToBeClickable(vacationAccount));
         vacationAccount.click();
     }
+
 
 }
