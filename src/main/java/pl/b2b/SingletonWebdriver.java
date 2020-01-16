@@ -7,10 +7,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SingletonWebdriver {
 
-    WebDriver driver;
-    WebDriverWait wait;
+    static WebDriver driver;
+    static WebDriverWait wait;
 
-    public WebDriver getDriver() {
+    public static WebDriver getDriver() {
         if (driver == null) {
             System.setProperty(GeckoDriverService.GECKO_DRIVER_EXE_PROPERTY, "C:/SeleniumDrivers/geckodriver.exe");
             driver = new FirefoxDriver();
@@ -19,7 +19,7 @@ public class SingletonWebdriver {
         return driver;
     }
 
-    public WebDriverWait getWait() {
+    public static WebDriverWait getWait() {
         if (wait == null) {
             wait = new WebDriverWait(driver, 10);
         }
