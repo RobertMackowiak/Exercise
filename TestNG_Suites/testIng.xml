@@ -1,0 +1,7 @@
+<suite name="ING">
+    <test name="testIng">
+        <classes>
+            <class name="pl.b2b.ingTest.test.TestIng"/>
+        </classes>
+    </test>
+</suite>
