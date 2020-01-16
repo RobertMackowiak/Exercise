@@ -1,0 +1,13 @@
+<suite name ="ING">
+
+    <test name ="transferTest">
+
+        <classes>
+
+            <class name="pl.b2b.ingTest.tests.IngTest"/>
+
+        </classes>
+
+    </test>
+
+</suite>
