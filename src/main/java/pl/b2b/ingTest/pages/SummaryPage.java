@@ -6,9 +6,9 @@ import org.openqa.selenium.support.PageFactory;
 import pl.b2b.SingletonWebdriver;
 import pl.b2b.ingTest.utils.WebPageMethods;
 
-public class PageSummary {
+public class SummaryPage {
 
-    public PageSummary() {
+    public SummaryPage() {
         PageFactory.initElements(SingletonWebdriver.getDriver(), this);
     }
 
@@ -21,7 +21,10 @@ public class PageSummary {
     @FindBy(xpath = "//strong[@class=\"sum_title no-outline-on-focus\"]")
     private WebElement confirmMessage;
 
-    public boolean accountsNumbersComparison() {
+    @FindBy(xpath = "//a[@class=\"link  js-summary-link js-link-id-1\"]")
+    private WebElement checkAccountHistoryBtn;
+
+    public boolean accountsNumbersComparison1() {
         return TransactionsPage.accountNumberToCheck.equals(accountNumber2.getText());
     }
 
@@ -31,5 +34,9 @@ public class PageSummary {
 
     public String getConfirmMessage() {
         return confirmMessage.getText();
+    }
+
+    public void clickOnCheckAccountHistoryBtn() {
+        WebPageMethods.clickElement(checkAccountHistoryBtn);
     }
 }

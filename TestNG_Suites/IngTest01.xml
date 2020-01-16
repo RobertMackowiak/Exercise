@@ -1,4 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="ING">
+    <parameter name="recipientName" value="Jack Daniels"/>
+    <parameter name="transactionAmount" value="379"/>
+    <parameter name="transferTitle" value="for whiskey"/>
     <test name="IngTest01">
         <classes>
             <class name="pl.b2b.ingTest.tests.IngTest01"/>

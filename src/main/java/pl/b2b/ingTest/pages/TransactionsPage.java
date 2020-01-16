@@ -25,13 +25,13 @@ public class TransactionsPage {
     private WebElement usualTransfer;
 
     @FindBy(id = "transfer-recipient-name")
-    private WebElement transferRecipientName;
+    private WebElement transferRecipientNameField;
 
     @FindBy(id = "amount")
-    private WebElement transferAmount;
+    private WebElement transferAmountField;
 
     @FindBy(id = "title")
-    private WebElement transferTitle;
+    private WebElement transferTitleField;
 
     @FindBy(xpath = "//button[@class=\"btn btn-primary btn-block btn-lg js-further\"]")
     private WebElement continueBtn;
@@ -49,16 +49,16 @@ public class TransactionsPage {
         WebPageMethods.clickElement(usualTransfer);
     }
 
-    public void fillRecipientName() {
-        WebPageMethods.sendKeysToElement(transferRecipientName, "Jack Daniels");
+    public void fillRecipientName(String name) {
+        WebPageMethods.sendKeysToElement(transferRecipientNameField, name);
     }
 
-    public void fillTransferAmount() {
-        WebPageMethods.sendKeysToElement(transferAmount, "500");
+    public void fillTransferAmount(String amount) {
+        WebPageMethods.sendKeysToElement(transferAmountField, amount);
     }
 
-    public void fillTransferTitle() {
-        WebPageMethods.sendKeysToElement(transferTitle, "for transport");
+    public void fillTransferTitle(String title) {
+        WebPageMethods.sendKeysToElement(transferTitleField, title);
     }
 
     public void clickOnContinueBtn() {
