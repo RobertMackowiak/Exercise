@@ -1,4 +1,4 @@
-package pl.b2b.ingTest.utils;
+package pl.b2b.utils;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;

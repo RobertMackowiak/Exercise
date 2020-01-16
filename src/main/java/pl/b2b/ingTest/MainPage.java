@@ -5,7 +5,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pl.b2b.SingletonWebdriver;
-import pl.b2b.ingTest.utils.WebPageMethods;
+import pl.b2b.utils.WebPageMethods;
 
 public class MainPage {
 
