@@ -1,49 +1,67 @@
 package pl.b2b.ingTest.pages;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pl.b2b.SingletonWebdriver;
-
-import java.util.List;
+import pl.b2b.ingTest.utils.WebPageMethods;
 
 public class TransactionsPage {
+
+    public static String accountNumberToCheck = "";
 
     public TransactionsPage() {
         PageFactory.initElements(SingletonWebdriver.getDriver(), this);
     }
 
-    @FindAll(@FindBy(xpath = "//ul[@class=\"ing-list\"]/li"))
-    private List<WebElement> accountsList;
+    @FindBy(xpath = "//li[@class=\"ing-list-element product-tile is-clickable is-goal\"]")
+    private WebElement holidayAccountBtn;
 
-    @FindBy(xpath = "(//p[@class=\"product-tile__iban is-long\"])[3]")
-    private WebElement accountNo3Iban;
+    @FindBy(xpath = "//p[@class=\"product-tile__iban is-long\"]")
+    private WebElement accountNumber1;
 
-//    @FindBy(xpath = "//li[@class=\"ing-list-element product-tile is-clickable is-goal\"]")
-//    private WebElement accountNo3;
+    @FindBy(xpath = "//a[@class=\"js-key-access tile tile--small ing-clickable ing-hover\"]")
+    private WebElement usualTransfer;
 
-//    @FindBy(xpath = "(//div[@class=\"tile_title tile_title--icon-left\"])[1]")
-//    private WebElement normalTransaction;
+    @FindBy(id = "transfer-recipient-name")
+    private WebElement transferRecipientName;
 
-//    this method needs to be changed; assertion will be done later
-    public void checkAccNumber () {
-        String numberToCheck;
-        SingletonWebdriver.getWait().until(ExpectedConditions.visibilityOf(accountNo3Iban));
-        numberToCheck = accountNo3Iban.getText();
-        if (numberToCheck.equals("79 1050 0028 2100 0023 0315 0007")) {
-            System.out.println("IBAN number OK");
-        }
+    @FindBy(id = "amount")
+    private WebElement transferAmount;
+
+    @FindBy(id = "title")
+    private WebElement transferTitle;
+
+    @FindBy(xpath = "//button[@class=\"btn btn-primary btn-block btn-lg js-further\"]")
+    private WebElement continueBtn;
+
+    public void clickOnHolidayAccount() {
+        WebPageMethods.clickElement(holidayAccountBtn);
     }
 
-    public void clickOnAccountNo3() {
-        SingletonWebdriver.getWait().until(ExpectedConditions.visibilityOf(accountsList.get(2)));
-        accountsList.get(2).click();
+    public void copyMyAccountNumber() {
+        SingletonWebdriver.getWait().until(ExpectedConditions.visibilityOf(accountNumber1));
+        accountNumberToCheck = accountNumber1.getText();
     }
 
-//    public void clickNormalTransaction() {
-//        SingletonWebdriver.getWait().until(ExpectedConditions.elementToBeClickable(normalTransaction));
-//        normalTransaction.click();
-//    }
+    public void clickOnUsualTransfer() {
+        WebPageMethods.clickElement(usualTransfer);
+    }
+
+    public void fillRecipientName() {
+        WebPageMethods.sendKeysToElement(transferRecipientName, "Jack Daniels");
+    }
+
+    public void fillTransferAmount() {
+        WebPageMethods.sendKeysToElement(transferAmount, "500");
+    }
+
+    public void fillTransferTitle() {
+        WebPageMethods.sendKeysToElement(transferTitle, "for transport");
+    }
+
+    public void clickOnContinueBtn() {
+        WebPageMethods.clickElement(continueBtn);
+    }
 }
