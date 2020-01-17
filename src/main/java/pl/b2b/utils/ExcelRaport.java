@@ -6,10 +6,10 @@ import java.io.*;
 import java.util.List;
 
 public class ExcelRaport {
-    public void writeToExcelPositive(List<String> dataList){
+    public void writeToExcelPositive(String name,String surname, String adress, String cash, String title){
 
         try {
-            File file = new File("C://Users//B2B//Desktop//phpTravel.xlsx");
+            File file = new File("C://Users//B2B//Desktop//TestReport.xlsx");
             FileInputStream fis = new FileInputStream(file);
             XSSFWorkbook book = new XSSFWorkbook(fis);
             XSSFSheet sheet = book.getSheetAt(0);
@@ -20,7 +20,7 @@ public class ExcelRaport {
             //Pobiera numer ostatniego testu
             XSSFRow row = sheet.getRow(lastRowNum);
             XSSFCell cell = row.getCell(0);
-            int testNumer = (int)cell.getNumericCellValue()+1;
+//            int testNumer = (int)cell.getNumericCellValue()+1;
 
             //Tworzy nowy wiersz
             int nextRow = lastRowNum+1;
@@ -28,19 +28,19 @@ public class ExcelRaport {
 
             //Tworzy nowe komórki i przypisuje im wartości
             cell = row.createCell(0);
-            cell.setCellValue(testNumer);
+            cell.setCellValue(name);
 
             cell = row.createCell(1);
-            cell.setCellValue(dataList.get(1));
+            cell.setCellValue(surname);
 
             cell = row.createCell(2);
-            cell.setCellValue(dataList.get(3));
+            cell.setCellValue(adress);
 
             cell = row.createCell(3);
-            cell.setCellValue(dataList.get(0));
+            cell.setCellValue(cash);
 
             cell = row.createCell(4);
-            cell.setCellValue(dataList.get(2));
+            cell.setCellValue(title);
 
             cell = row.createCell(5);
             cell.setCellValue("POZYTYWNY");
@@ -54,7 +54,7 @@ public class ExcelRaport {
             os.close();
             book.close();
             fis.close();
-            dataList.clear();
+//            dataList.clear();
 
 
         }catch (FileNotFoundException e){
@@ -67,18 +67,18 @@ public class ExcelRaport {
 
     public void writeToExcelNegative(){
         try{
-            File file = new File("C://Users//B2B//Desktop//phpTravel.xlsx");
+            File file = new File("C://Users//B2B//Desktop//TestReport.xlsx");
             FileInputStream fis = new FileInputStream(file);
             XSSFWorkbook book = new XSSFWorkbook(fis);
             XSSFSheet sheet = book.getSheetAt(0);
             int lastRowNum = sheet.getLastRowNum();
             XSSFRow row = sheet.getRow(lastRowNum);
             XSSFCell cell = row.getCell(0);
-            int testNumer = (int)cell.getNumericCellValue()+1;
+//            int testNumer = (int)cell.getNumericCellValue()+1;
             int nextRow = lastRowNum+1;
             row = sheet.createRow(nextRow);
-            cell = row.createCell(0);
-            cell.setCellValue(testNumer);
+//            cell = row.createCell(0);
+//            cell.setCellValue(testNumer);
             cell = row.createCell(5);
             cell.setCellValue("NEGATYWNY");
             FileOutputStream os = new FileOutputStream(file);
