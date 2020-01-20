@@ -1,4 +1,4 @@
-package pl.b2b.bankIngPages;
+package pl.b2b.bankIng.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,7 +19,15 @@ public class MainPage {
     @FindBy(xpath = "//li[@id=\"menu-transactions\"]")
     private WebElement executeTransactionButton;
 
+    @FindBy(id="page-loader-overlay-region")
+    private WebElement loader;
+
+    @FindBy(xpath = "//div[@class=\"demo-curtain\"]")
+    private WebElement curtain;
+
     public void clickExecuteTransactionButton(){
+        SingletonWebdriver.getWait().until(ExpectedConditions.invisibilityOf(loader));
+        SingletonWebdriver.getWait().until(ExpectedConditions.visibilityOf(curtain));
         SingletonWebdriver.getWait().until(ExpectedConditions.elementToBeClickable(executeTransactionButton));
         executeTransactionButton.click();
     }

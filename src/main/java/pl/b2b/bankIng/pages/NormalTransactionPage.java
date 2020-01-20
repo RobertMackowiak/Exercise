@@ -1,4 +1,4 @@
-package pl.b2b.bankIngPages;
+package pl.b2b.bankIng.pages;
 
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
@@ -32,7 +32,7 @@ public class NormalTransactionPage {
     @FindBy(xpath = "strong[class=\"sum_title no-outline-on-focus\"]")
     private WebElement title;
 
-    public void putInTextInLabels() {
+    public void putInTextInLabels(String name ,String surname, String address) {
         nameAndAdressLabel.sendKeys("Bonifacy, Jerozolimska");
         amountLabel.sendKeys("300");
         titleLabel.sendKeys("szampany");
