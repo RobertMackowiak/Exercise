@@ -8,7 +8,7 @@ import pl.b2b.SingletonWebdriver;
 import pl.b2b.ingTest.utils.WebPageMethods;
 
 public class TransactionPage {
-    public String transferAmount ="1234";
+    public String transferAmount ="1236";
     public static String accountNumber ="";
 
     public TransactionPage() { PageFactory.initElements(SingletonWebdriver.getDriver(),this); }
@@ -45,11 +45,16 @@ public class TransactionPage {
     public void clickRegularTransferBtn(){
         WebPageMethods.clickElement(regularTransferBtn);
     }
-    public void putDetails() {
-        WebPageMethods.sendKeysToElement(nameAndAddress, "Andrzej Dupa Warszawa");
-        WebPageMethods.sendKeysToElement(amount, transferAmount);
-        WebPageMethods.sendKeysToElement(title, "przelew");
+
+    public void putNameAndAddress(String itemName) {    WebPageMethods.sendKeysToElement(nameAndAddress, itemName);
     }
+    public void putAmount(String itemAmount) {
+        WebPageMethods.sendKeysToElement(amount, itemAmount);
+    }
+    public void putTitle(String itemTitle){
+        WebPageMethods.sendKeysToElement(title,itemTitle);
+    }
+
     public void clickNextBtn(){
         WebPageMethods.clickElement(nextBtn);
     }
