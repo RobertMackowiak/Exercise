@@ -1,45 +1,51 @@
 package pl.b2b.ingTest.tests;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pl.b2b.SingletonWebdriver;
 import pl.b2b.ingTest.pages.*;
 
 import pl.b2b.ingTest.utils.ExcelData;
 import pl.b2b.ingTest.utils.ExcelRaport;
 
+import java.util.Iterator;
+import java.util.List;
+
 public class IngTest {
     MainPage mainPage;
     TransactionPage transactionPage;
     TransactionSummary transactionSummary;
     HistoryPage historyPage;
-    String name;
-    String surname;
-    String address;
-    String amount;
-    String title;
+//    String name;
+//    String surname;
+//    String address;
+//    String amount;
+//    String title;
 
-    @BeforeTest
+    @DataProvider
+    public Iterator<Object[]> dataProvider(){
+        List<Object[]> List = ExcelData.getAllDataExcel("C:\\Users\\B2B\\Desktop\\TestData.xlsx", "Arkusz1");
+        return List.iterator();
+    }
+
+    @BeforeMethod
     public void beforeTest(){
         mainPage = new MainPage();
         transactionPage = new TransactionPage();
         transactionSummary = new TransactionSummary();
         historyPage = new HistoryPage();
-        ExcelData.openExcel("C:\\Users\\B2B\\Desktop\\TestData.xlsx", "Arkusz1");
-        name = ExcelData.getCellData(1,0);
-        surname = ExcelData.getCellData(1,1);
-        address = ExcelData.getCellData(1,2);
-        amount = ExcelData.getNumCellData(1,3);
-        title = ExcelData.getCellData(1,4);
+//        ExcelData.openExcel("C:\\Users\\B2B\\Desktop\\TestData.xlsx", "Arkusz1");
+//        name = ExcelData.getCellData(1,0);
+//        surname = ExcelData.getCellData(1,1);
+//        address = ExcelData.getCellData(1,2);
+//        amount = ExcelData.getNumCellData(1,3);
+//        title = ExcelData.getCellData(1,4);
         SingletonWebdriver.getDriver().get("https://login.ingbank.pl/mojeing/demo/#home");
 
     }
 
-    @Test
-    public void testIng() {
+    @Test(dataProvider = "dataProvider")
+    public void testIng(String name, String surname, String address, String amount, String title) {
         try {
             mainPage.closeCookies();
             mainPage.clickExecuteTransactionBtn();
@@ -50,7 +56,6 @@ public class IngTest {
             transactionPage.putAmount(amount);
             transactionPage.putTitle(title);
             transactionPage.clickNextBtn();
-
             Assert.assertTrue(transactionSummary.vacationAccNumbersComparison());
             transactionSummary.clickAcceptButton();
 
@@ -70,10 +75,10 @@ public class IngTest {
         Assert.assertEquals(historyPage.showNextAmount(), transactionPage.transferAmount);
     }
 
-    @AfterTest
+    @AfterMethod
     public void afterTest(){
         ExcelData.closeFile();
-        SingletonWebdriver.getDriver().quit();
+        SingletonWebdriver.quitDriver();
 
     }
 }

@@ -7,6 +7,8 @@ package pl.b2b.ingTest.utils;
 
         import java.io.FileInputStream;
         import java.io.IOException;
+        import java.util.ArrayList;
+        import java.util.List;
 
 
 public class ExcelData {
@@ -41,4 +43,19 @@ public class ExcelData {
             e.printStackTrace();
         }
     }
+    public static List<Object[]> getAllDataExcel(String path, String sheet){
+        List<Object[]> lista = new ArrayList<>();
+        openExcel(path, sheet);
+        for (int i = 1; i <= excelSheet.getLastRowNum(); i++){
+            String name = getCellData(i,0);
+            String surname = getCellData(i,1);
+            String address = getCellData(i,2);
+            String amount = getNumCellData(i,3);
+            String title = getCellData(i,4);
+            Object ob[] = {name, surname, address, amount, title};
+            lista.add(ob);
+        }
+        return lista;
+    }
+
 }

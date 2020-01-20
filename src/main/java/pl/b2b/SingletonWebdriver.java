@@ -25,4 +25,9 @@ public class SingletonWebdriver {
         }
         return wait;
     }
+
+    public static void quitDriver(){
+        getDriver().quit();
+        driver = null;
+    }
 }
