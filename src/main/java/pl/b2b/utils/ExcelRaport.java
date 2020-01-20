@@ -46,9 +46,6 @@ public class ExcelRaport {
             cell.setCellValue("POZYTYWNY");
 
 
-
-
-
             FileOutputStream os = new FileOutputStream(file);
             book.write(os);
             os.close();

@@ -1,7 +1,7 @@
 <suite name="ing">
     <test name="test1">
         <classes>
-            <class name="pl.b2b.Test"/>
+            <class name="pl.b2b.IngTest"/>
             <methods>
                 <include name="test"/>
             </methods>

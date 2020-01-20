@@ -4,6 +4,8 @@ import org.apache.poi.xssf.usermodel.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExcelData {
 
@@ -46,6 +48,50 @@ public class ExcelData {
             return "";
         }
     }
+
+    public static List<Object[]> dataProviderFromExcel(String path){
+        List<Object[]> data = new ArrayList<>();
+
+        try {
+            setExcelFile(path);
+
+        for(int rowNum = 1;rowNum<=excelWSheet.getLastRowNum();rowNum++){
+            String name = getCellData(rowNum,0);
+            String surname = getCellData(1,1);
+            String adres = getCellData(1,2);
+            String cashAmount = getNumericCellData(1,3);
+            String title = getCellData(1,4);
+
+            Object ob[]={name,surname,adres,cashAmount,title};
+            data.add(ob);
+        }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+//    public static String[][] getDataFromExcelToProvider(String path){
+//        String[][] tablice = null;
+//        try {
+//            setExcelFile(path);
+//            for(int rowNum = 1;rowNum<=excelWSheet.getLastRowNum();rowNum++){
+//                String name = getCellData(rowNum,0);
+//                String surname = ExcelData.getCellData(1,1);
+//                String adres = ExcelData.getCellData(1,2);
+//                String cashAmount = ExcelData.getNumericCellData(1,3);
+//                String title = ExcelData.getCellData(1,4);
+//
+////                Object ob[]={name,surname,adres,cashAmount,title};
+////                data.add(ob);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return tablice;
+//    }
 
     public static void closeFiles(){
         try {
