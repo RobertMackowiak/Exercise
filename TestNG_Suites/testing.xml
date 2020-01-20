@@ -1,0 +1,12 @@
+<suite name = "ING">
+    <test name = "IngTest">
+        <classes>
+            <class name = "pl.b2b.ingTest.Tests.IngTest"/>
+        </classes>
+
+
+    </test>
+
+
+
+</suite>
