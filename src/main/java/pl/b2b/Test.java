@@ -1,7 +1,6 @@
 package pl.b2b;
 
 
-import org.openqa.selenium.WebDriverException;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pl.b2b.ingTest.MainPage;
@@ -18,7 +17,7 @@ public class Test {
     ExcelRaport excelRaport;
     String name = null;
     String surname = null;
-    String adress = null;
+    String adres = null;
     String cashAmount = null;
     String title = null;
 
@@ -39,7 +38,7 @@ public class Test {
         try {
             name = ExcelData.getCellData(1,0);
             surname = ExcelData.getCellData(1,1);
-            adress = ExcelData.getCellData(1,2);
+            adres = ExcelData.getCellData(1,2);
             cashAmount = ExcelData.getNumericCellData(1,3);
             title = ExcelData.getCellData(1,4);
         } catch (Exception e) {
@@ -61,18 +60,26 @@ public class Test {
         makeTransactionPage.clickVacationAccount();
         makeTransactionPage.getTextFromAccountNumber();
         makeTransactionPage.clickNormalTransaction();
-        makeTransactionPage.fillNameAndAdress(name,surname,adress);
+        makeTransactionPage.fillNameAndAdress(name,surname, adres);
         makeTransactionPage.fillCashAmount(cashAmount);
         makeTransactionPage.fillTitle(title);
         makeTransactionPage.clickForwardButton();
         Assert.assertTrue(normalTransactionSummaryPage.checkAccountNumber());
         normalTransactionSummaryPage.clickConfirmButton();
         Assert.assertEquals(normalTransactionSummaryPage.getConfirmMessage(),"Przelew został wykonan");
-        excelRaport.writeToExcelPositive(name,surname,adress,cashAmount,title);
+        excelRaport.writeToExcelPositive(name,surname, adres,cashAmount,title);
     }catch(Error | Exception e){
        excelRaport.writeToExcelNegative();
        throw e;
        }
+   }
+
+   @org.testng.annotations.Test
+    public void removePerson(){
+mainPage.waitForCookies();
+mainPage.clickOnMyFinances();
+mainPage.clickOnSavingAccount();
+
    }
 
 }

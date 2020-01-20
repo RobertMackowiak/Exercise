@@ -23,10 +23,27 @@ public class MainPage {
     @FindBy(xpath = "//a[@class=\"cookie-policy_close js-close-cookie glyphicon glyphicon-ing-close\"]")
     private WebElement closeCookieButton;
 
+    @FindBy(xpath = "//li[@id=\"menu-products\"]")
+    private WebElement myFinances;
+
+    @FindBy(xpath = "//span[@class=\"name row_name--S\"]")
+    private WebElement savingAccount;
+
 
     public void clickOnWykonaj(){
+        WebPageMethods.clickElement(wykonajTrans);
+    }
+
+    public void waitForCookies(){
         SingletonWebdriver.getWait().until(ExpectedConditions.visibilityOf(demoVersionInfo));
         WebPageMethods.clickElement(closeCookieButton);
-        WebPageMethods.clickElement(wykonajTrans);
+    }
+
+    public void clickOnMyFinances(){
+        WebPageMethods.clickElement(myFinances);
+    }
+
+    public void clickOnSavingAccount(){
+        WebPageMethods.clickElement(savingAccount);
     }
 }
