@@ -26,11 +26,15 @@ public class DetailsPage {
     private WebElement next;
 
 
-    public void putDetails() {
+    public void putNameAndAddress(String itemName) {
 
-        WebPageMethods.sendKeysToElement(nameAndAddress,"Monika Kowal Lublin");
-        WebPageMethods.sendKeysToElement(amount, transferAmount);
-        WebPageMethods.sendKeysToElement(title,"Przelew");
+        WebPageMethods.sendKeysToElement(nameAndAddress, itemName);
+    }
+    public void putAmount(String itemAmount) {
+        WebPageMethods.sendKeysToElement(amount, itemAmount);
+    }
+    public void putTitle(String itemTitle){
+        WebPageMethods.sendKeysToElement(title,itemTitle);
     }
 
     public void clickNext(){

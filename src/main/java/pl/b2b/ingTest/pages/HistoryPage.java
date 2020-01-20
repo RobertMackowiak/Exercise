@@ -28,7 +28,5 @@ public class HistoryPage {
     }
     public String getFinalAmount(){
         return finalAmount.getText().replaceAll("\\s","").substring(1,5);
-//
-//
     }
 }
