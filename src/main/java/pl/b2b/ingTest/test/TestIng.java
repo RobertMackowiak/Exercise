@@ -20,6 +20,9 @@ public class TestIng {
     DetailsPage detailsPage;
     PageSummary pageSummary;
     HistoryPage historyPage;
+    SavingAccount savingAccount;
+    AttorneysPage attorneysPage;
+
 
     String name;
     String surname;
@@ -33,7 +36,7 @@ public class TestIng {
         return list.iterator();
     }
 
-    @BeforeMethod
+    @BeforeTest
     public void beforeTest(){
         mainPage = new MainPage();
         chooseAccountPage = new ChooseAccountPage();
@@ -41,6 +44,8 @@ public class TestIng {
         detailsPage = new DetailsPage();
         pageSummary = new PageSummary();
         historyPage = new HistoryPage();
+        savingAccount = new SavingAccount();
+        attorneysPage = new AttorneysPage();
 //        ExcelData.openExcel("C:\\Users\\b2b\\Desktop\\TestData.xlsx", "Sheet1");
 //        name = ExcelData.getCellData(1,0);
 //        surname = ExcelData.getCellData(1,1);
@@ -51,7 +56,7 @@ public class TestIng {
 
     }
 
-    @AfterMethod
+    @AfterTest
     public void afterTest(){
         ExcelData.closeFile();
         SingletonWebdriver.quitDriver();
@@ -86,6 +91,35 @@ public class TestIng {
         historyPage.clickTransferDetails();
         Assert.assertTrue(historyPage.anotherComparison());
 //        Assert.assertEquals(historyPage.getFinalAmount(), detailsPage.transferAmount);
+    }
+    @Test
+    public void testIng3(){
+        mainPage.closeCookies();
+        mainPage.clickMyFinancesbutton();
+        mainPage.clickOpenSavingsAccount();
+        savingAccount.clickAttorneyButton();
+        attorneysPage.clickAddAttorneyButton();
+        attorneysPage.setNameAndSurname("sdgfjsdhgjdsg");
+        attorneysPage.choosePassport();
+        attorneysPage.setIdNumber("sahfsfj");
+        attorneysPage.clickForwardButton();
+        attorneysPage.waitForAnnex();
+        attorneysPage.clickForwardButton();
+        attorneysPage.clickConfirmationButton();
+        Assert.assertEquals(attorneysPage.getConfirmationText(), "Pełnomocnik został dodany");
+
+    }
+    @Test(dependsOnMethods = "testIng3")
+    public void testIng4(){
+        mainPage.clickMyFinancesbutton();
+        mainPage.clickOpenSavingsAccount();
+        savingAccount.clickAttorneyButton();
+        attorneysPage.clickRevokeAttorney();
+        mainPage.clickMyFinancesbutton();
+        mainPage.clickOpenSavingsAccount();
+        savingAccount.clickAttorneyButton();
+        attorneysPage.clickRevokeAttorney();
+
     }
 
 
