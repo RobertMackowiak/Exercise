@@ -77,6 +77,7 @@ public class IngTest {
         mainPage.clickOpenSavingAccount();
         savingAccount.clickAttorneyButton();
         attorneysPage.clickRevokeButton();
+        Assert.assertEquals(attorneysPage.getMessage(), "Pełnomocnik został usunięty");
     }
 
     @Test(dataProvider = "dataProvider")

@@ -58,6 +58,7 @@ public class AttorneysPage {
     @FindBy(xpath = "//button[@class=\"btn btn-primary btn-block btn-lg js-next-button\"]")
     private WebElement nextButtonAfterRevoke;
 
+
     public void clickRevokeButton() {
         SingletonWebdriver.getWait().until(ExpectedConditions.visibilityOf(addAttorneyButton));
         if (SingletonWebdriver.getDriver().findElements(xpath("(//a[@class=\"js-revoke link\"][1])")).size()>0){
