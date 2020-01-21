@@ -1,5 +1,6 @@
 package pl.b2b.ingTest.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -20,13 +21,29 @@ public class MainPage {
     @FindBy(xpath = "//a[@class=\"cookie-policy_close js-close-cookie glyphicon glyphicon-ing-close\"]")
     private WebElement cookies;
 
+    @FindBy(id="menu-products")
+    private WebElement myFinancesButton;
+
+    @FindBy(xpath = "//span[@class=\"name row_name--S\"]")
+    private WebElement openSavingAccount;
+
     public void closeCookies(){
         SingletonWebdriver.getWait().until(ExpectedConditions.visibilityOf(demoInfo));
-        WebPageMethods.clickElement(cookies);
+        if (!SingletonWebdriver.getDriver().findElements(By.xpath("//a[@class=\"cookie-policy_close js-close-cookie glyphicon glyphicon-ing-close\"]")).isEmpty()) {
+            WebPageMethods.clickElement(cookies);
+        }
     }
 
     public void clickExecuteTransactionBtn(){
         WebPageMethods.clickElement(executeTransactionBtn);
+    }
+
+    public void clickMyFinancesButton(){
+        WebPageMethods.clickElement(myFinancesButton);
+    }
+
+    public void clickOpenSavingAccount(){
+        WebPageMethods.clickElement(openSavingAccount);
     }
 
 }

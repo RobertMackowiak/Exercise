@@ -16,6 +16,8 @@ public class IngTest {
     TransactionPage transactionPage;
     TransactionSummary transactionSummary;
     HistoryPage historyPage;
+    SavingAccount savingAccount;
+    AttorneysPage attorneysPage;
 //    String name;
 //    String surname;
 //    String address;
@@ -28,12 +30,14 @@ public class IngTest {
         return List.iterator();
     }
 
-    @BeforeMethod
+    @BeforeTest
     public void beforeTest(){
         mainPage = new MainPage();
         transactionPage = new TransactionPage();
         transactionSummary = new TransactionSummary();
         historyPage = new HistoryPage();
+        savingAccount = new SavingAccount();
+        attorneysPage = new AttorneysPage();
 //        ExcelData.openExcel("C:\\Users\\B2B\\Desktop\\TestData.xlsx", "Arkusz1");
 //        name = ExcelData.getCellData(1,0);
 //        surname = ExcelData.getCellData(1,1);
@@ -42,6 +46,37 @@ public class IngTest {
 //        title = ExcelData.getCellData(1,4);
         SingletonWebdriver.getDriver().get("https://login.ingbank.pl/mojeing/demo/#home");
 
+    }
+
+    @Test
+    public void dodawaniePełnomocnika(){
+        mainPage.closeCookies();
+        mainPage.clickMyFinancesButton();
+        mainPage.clickOpenSavingAccount();
+        savingAccount.clickAttorneyButton();
+        attorneysPage.clickAddAttorneyButton();
+        attorneysPage.inputName("Andrzej Duda");
+        attorneysPage.setAttorneyId();
+        attorneysPage.inputIdNumber("4546798684");
+        attorneysPage.clickNextBtn();
+        attorneysPage.waitAnnex();
+        attorneysPage.clickNextBtn();
+        attorneysPage.clickConfirmationButton();
+        Assert.assertEquals(attorneysPage.getMessage(), "Pełnomocnik został dodany");
+
+        // attorneysPage.clickRevokeButton();
+    }
+
+    @Test(dependsOnMethods = "dodawaniePełnomocnika")
+    public void usuwaniePełnomocnika(){
+        mainPage.clickMyFinancesButton();
+        mainPage.clickOpenSavingAccount();
+        savingAccount.clickAttorneyButton();
+        attorneysPage.clickRevokeButton();
+        mainPage.clickMyFinancesButton();
+        mainPage.clickOpenSavingAccount();
+        savingAccount.clickAttorneyButton();
+        attorneysPage.clickRevokeButton();
     }
 
     @Test(dataProvider = "dataProvider")
@@ -75,7 +110,9 @@ public class IngTest {
         Assert.assertEquals(historyPage.showNextAmount(), transactionPage.transferAmount);
     }
 
-    @AfterMethod
+
+
+    @AfterTest
     public void afterTest(){
         ExcelData.closeFile();
         SingletonWebdriver.quitDriver();

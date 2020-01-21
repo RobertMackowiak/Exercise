@@ -8,6 +8,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ExcelRaport {
@@ -19,28 +21,45 @@ public class ExcelRaport {
     private static XSSFCell excelCell;
 
     public static void writeToExcel(String path, String sheet, String name, String surname, String adress, String amount, String title, boolean result){
+        List<String> listToExcel = new ArrayList<>();
+        listToExcel.add(name);
+        listToExcel.add(surname);
+        listToExcel.add(adress);
+        listToExcel.add(amount);
+        listToExcel.add(title);
+
+        if (result){
+            listToExcel.add("Pozytywny");
+        }else{
+            listToExcel.add("Negatywny");
+        }
+
         try {
             excelFile = new FileInputStream(path);
             excelWorkbook = new XSSFWorkbook(excelFile);
             excelSheet = excelWorkbook.getSheet(sheet);
             int excelLastRow = excelSheet.getLastRowNum()+1;  //pierwszy pusty rząd
             excelRow = excelSheet.createRow(excelLastRow);  //tworzy pustą linijkę
-            excelCell = excelRow.createCell(0);
-            excelCell.setCellValue(name);
-            excelCell = excelRow.createCell(1);
-            excelCell.setCellValue(surname);
-            excelCell = excelRow.createCell(2);
-            excelCell.setCellValue(adress);
-            excelCell = excelRow.createCell(3);
-            excelCell.setCellValue(amount);
-            excelCell = excelRow.createCell(4);
-            excelCell.setCellValue(title);
-            excelCell = excelRow.createCell(5);
-            if (result){
-                excelCell.setCellValue("Pozytywny");
-            }else{
-                excelCell.setCellValue("Negatywny");
+            for(int i = 0; i <listToExcel.size(); i++){
+                excelCell = excelRow.createCell(i);
+                excelCell.setCellValue(listToExcel.get(i));
             }
+//            excelCell = excelRow.createCell(0);
+//            excelCell.setCellValue(name);
+//            excelCell = excelRow.createCell(1);
+//            excelCell.setCellValue(surname);
+//            excelCell = excelRow.createCell(2);
+//            excelCell.setCellValue(adress);
+//            excelCell = excelRow.createCell(3);
+//            excelCell.setCellValue(amount);
+//            excelCell = excelRow.createCell(4);
+//            excelCell.setCellValue(title);
+//            excelCell = excelRow.createCell(5);
+//            if (result){
+//                excelCell.setCellValue("Pozytywny");
+//            }else{
+//                excelCell.setCellValue("Negatywny");
+//            }
 
             FileOutputStream fileOutputStream = new FileOutputStream(path);
             excelWorkbook.write(fileOutputStream);
