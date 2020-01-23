@@ -2,12 +2,17 @@ package pl.b2b;
 
 
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import pl.b2b.ingTest.MainPage;
 import pl.b2b.ingTest.MakeTransactionPage;
 import pl.b2b.ingTest.NormalTransactionSummaryPage;
 import pl.b2b.utils.ExcelData;
 import pl.b2b.utils.ExcelRaport;
+import pl.b2b.utils.MySqlData;
+import pl.b2b.utils.WebPageMethods;
 
 import java.util.Iterator;
 import java.util.List;
@@ -53,20 +58,27 @@ public class IngTest {
             makeTransactionPage.fillNameAndAdress(name, surname, adres);
             makeTransactionPage.fillCashAmount(cashAmount);
             makeTransactionPage.fillTitle(title);
-            makeTransactionPage.clickForwardButton();
-            Assert.assertTrue(normalTransactionSummaryPage.checkAccountNumber());
+//            makeTransactionPage.clickForwardButton();
+//            Assert.assertTrue(normalTransactionSummaryPage.checkAccountNumber());
             normalTransactionSummaryPage.clickConfirmButton();
-            Assert.assertEquals(normalTransactionSummaryPage.getConfirmMessage(), "Przelew został wykonany","udalo sie");
-            excelRaport.writeToExcelPositive(name, surname, adres, cashAmount, title);
+            Assert.assertEquals(normalTransactionSummaryPage.getConfirmMessage(), "Przelew został wykonany", "udalo sie");
+            excelRaport.writeToExcelPositive(name, surname, adres, cashAmount, title, true);
+            MySqlData.sendToBase(true, name, surname, adres, cashAmount, title);
         } catch (Error | Exception e) {
-            excelRaport.writeToExcelNegative();
+            try {
+                WebPageMethods.takeSnapShot(name + surname);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            excelRaport.writeToExcelPositive(name, surname, adres, cashAmount, title, false);
+            MySqlData.sendToBase(false, name, surname, adres, cashAmount, title);
             throw e;
         }
     }
 
     @Test(dependsOnMethods = "test")
-    public void testIng2(){
-       Assert.assertTrue(true);
+    public void testIng2() {
+        Assert.assertTrue(true);
     }
 
     @Test

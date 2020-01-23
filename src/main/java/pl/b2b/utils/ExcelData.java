@@ -57,10 +57,10 @@ public class ExcelData {
 
         for(int rowNum = 1;rowNum<=excelWSheet.getLastRowNum();rowNum++){
             String name = getCellData(rowNum,0);
-            String surname = getCellData(1,1);
-            String adres = getCellData(1,2);
-            String cashAmount = getNumericCellData(1,3);
-            String title = getCellData(1,4);
+            String surname = getCellData(rowNum,1);
+            String adres = getCellData(rowNum,2);
+            String cashAmount = getNumericCellData(rowNum,3);
+            String title = getCellData(rowNum,4);
 
             Object ob[]={name,surname,adres,cashAmount,title};
             data.add(ob);

@@ -1,12 +1,28 @@
 package pl.b2b.utils;
 
-import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExcelRaport {
-    public void writeToExcelPositive(String name,String surname, String adress, String cash, String title){
+    public void writeToExcelPositive(String name, String surname, String adress, String cash, String title, boolean result) {
+        List<String> listaDanych = new ArrayList<>();
+        listaDanych.add(name);
+        listaDanych.add(surname);
+        listaDanych.add(adress);
+        listaDanych.add(cash);
+        listaDanych.add(title);
+        if (result) {
+            listaDanych.add("Pozytywny");
+        } else {
+            listaDanych.add("Negatywny");
+        }
+
 
         try {
             File file = new File("C://Users//B2B//Desktop//TestReport.xlsx");
@@ -23,28 +39,13 @@ public class ExcelRaport {
 //            int testNumer = (int)cell.getNumericCellValue()+1;
 
             //Tworzy nowy wiersz
-            int nextRow = lastRowNum+1;
+            int nextRow = lastRowNum + 1;
             row = sheet.createRow(nextRow);
 
-            //Tworzy nowe komórki i przypisuje im wartości
-            cell = row.createCell(0);
-            cell.setCellValue(name);
-
-            cell = row.createCell(1);
-            cell.setCellValue(surname);
-
-            cell = row.createCell(2);
-            cell.setCellValue(adress);
-
-            cell = row.createCell(3);
-            cell.setCellValue(cash);
-
-            cell = row.createCell(4);
-            cell.setCellValue(title);
-
-            cell = row.createCell(5);
-            cell.setCellValue("POZYTYWNY");
-
+            for (int i = 0; i < listaDanych.size(); i++) {
+                cell = row.createCell(i);
+                cell.setCellValue(listaDanych.get(i));
+            }
 
             FileOutputStream os = new FileOutputStream(file);
             book.write(os);
@@ -54,35 +55,10 @@ public class ExcelRaport {
 //            dataList.clear();
 
 
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void writeToExcelNegative(){
-        try{
-            File file = new File("C://Users//B2B//Desktop//TestReport.xlsx");
-            FileInputStream fis = new FileInputStream(file);
-            XSSFWorkbook book = new XSSFWorkbook(fis);
-            XSSFSheet sheet = book.getSheetAt(0);
-            int lastRowNum = sheet.getLastRowNum();
-            XSSFRow row = sheet.getRow(lastRowNum);
-            XSSFCell cell = row.getCell(0);
-//            int testNumer = (int)cell.getNumericCellValue()+1;
-            int nextRow = lastRowNum+1;
-            row = sheet.createRow(nextRow);
-//            cell = row.createCell(0);
-//            cell.setCellValue(testNumer);
-            cell = row.createCell(5);
-            cell.setCellValue("NEGATYWNY");
-            FileOutputStream os = new FileOutputStream(file);
-            book.write(os);
-            os.close();
-            book.close();
-            fis.close();
-        }catch(Exception e){e.printStackTrace();}
     }
 }
