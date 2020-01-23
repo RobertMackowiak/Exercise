@@ -30,6 +30,12 @@ public class MainPage {
     @FindBy(xpath = "//span[@class=\"name row_name--S\"]")
     private WebElement openSavingsAccount;
 
+    @FindBy(id="menu-financemeter")
+    private WebElement servicesAndTools;
+
+    @FindBy(id="servicesRecipient")
+    private WebElement recipients;
+
     public void closeCookies(){
         SingletonWebdriver.getWait().until(ExpectedConditions.invisibilityOf(loader));
         SingletonWebdriver.getWait().until(ExpectedConditions.visibilityOf(curtain));
@@ -48,5 +54,13 @@ public class MainPage {
 
     public void clickOpenSavingsAccount(){
         WebPageMethods.clickElement(openSavingsAccount);
+    }
+
+    public void clickServicesAndTools(){
+        WebPageMethods.clickElement(servicesAndTools);
+    }
+
+    public void clickRecipients(){
+        WebPageMethods.clickElement(recipients);
     }
 }

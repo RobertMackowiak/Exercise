@@ -9,6 +9,8 @@ import pl.b2b.SingletonWebdriver;
 import pl.b2b.ingTest.pages.*;
 import pl.b2b.ingTest.utils.ExcelData;
 import pl.b2b.ingTest.utils.ExcelReport;
+import pl.b2b.ingTest.utils.MySqlData;
+import pl.b2b.ingTest.utils.WebPageMethods;
 
 import java.util.Iterator;
 import java.util.List;
@@ -22,13 +24,14 @@ public class TestIng {
     HistoryPage historyPage;
     SavingAccount savingAccount;
     AttorneysPage attorneysPage;
+    RecipientsPage recipientsPage;
 
 
-    String name;
-    String surname;
-    String address;
-    String amount;
-    String title;
+//    String name;
+//    String surname;
+//    String address;
+//    String amount;
+//    String title;
 
     @DataProvider
     public Iterator<Object[]> dataProvider(){
@@ -46,6 +49,7 @@ public class TestIng {
         historyPage = new HistoryPage();
         savingAccount = new SavingAccount();
         attorneysPage = new AttorneysPage();
+        recipientsPage = new RecipientsPage();
 //        ExcelData.openExcel("C:\\Users\\b2b\\Desktop\\TestData.xlsx", "Sheet1");
 //        name = ExcelData.getCellData(1,0);
 //        surname = ExcelData.getCellData(1,1);
@@ -78,10 +82,12 @@ public class TestIng {
            pageSummary.clickAcceptButton();
            Assert.assertEquals(pageSummary.getConfirmMessage(), "Przelew został wykonany");
            ExcelReport.writeToExcel("C:\\Users\\b2b\\Desktop\\TestReport.xlsx", "Sheet1", name, surname, address, amount, title, true );
+           MySqlData.sendToBase(name, surname, address, amount, title, "Pozytywny");
        } catch(AssertionError|Exception e){
+           WebPageMethods.takeAScreenshot();
            ExcelReport.writeToExcel("C:\\Users\\b2b\\Desktop\\TestReport.xlsx", "Sheet1", name, surname, address, amount, title, false );
+           MySqlData.sendToBase(name, surname, address, amount, title, "Negatywny");
            throw e;
-
        }
     }
 
@@ -119,6 +125,33 @@ public class TestIng {
         mainPage.clickOpenSavingsAccount();
         savingAccount.clickAttorneyButton();
         attorneysPage.clickRevokeAttorney();
+        Assert.assertEquals(attorneysPage.getConfirmationText(), "Pełnomocnik został usunięty");
+    }
+    @Test
+    public void testIng5(){
+        mainPage.closeCookies();
+        mainPage.clickServicesAndTools();
+        mainPage.clickRecipients();
+        recipientsPage.searchforARecipient("Tomek K");
+        recipientsPage.showRecipientsDetails();
+        recipientsPage.editRecipient();
+        recipientsPage.putPhoneNumber("666555444");
+        recipientsPage.clickSaveButton();
+        attorneysPage.clickConfirmationButton();
+        Assert.assertEquals(attorneysPage.getConfirmationText(), "Odbiorca został zaktualizowany");
+    }
+
+    @Test
+    @Parameters({"name", "surname", "address", "title"})
+    public void testIng6(String name, String surname, String address, String title){
+        mainPage.closeCookies();
+        mainPage.clickTransactionButton();
+        chooseAccountPage.accountNrComparison();
+        chooseAccountPage.clickVacationAccountButton();
+        transactionPage.chooseRegularTransfer();
+        detailsPage.putNameAndAddress(name + " " + surname + " " + address);
+        detailsPage.putAmount(detailsPage.getAmount());
+
 
     }
 

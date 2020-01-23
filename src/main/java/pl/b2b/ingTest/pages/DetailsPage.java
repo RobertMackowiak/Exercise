@@ -25,6 +25,9 @@ public class DetailsPage {
     @FindBy(xpath = "//button[@class=\"btn btn-primary btn-block btn-lg js-further\"]")
     private WebElement next;
 
+    @FindBy(xpath = "//p[@class=\"product-tile__amount\"]")
+    private WebElement copiedAmount;
+
 
     public void putNameAndAddress(String itemName) {
 
@@ -40,6 +43,11 @@ public class DetailsPage {
     public void clickNext(){
         WebPageMethods.clickElement(next);
     }
-
+    public String getAmount() {
+        String amount = copiedAmount.getText();
+        amount = amount.substring(0,amount.length()-3).replace(" ", "").replace(",", ".");
+        double amount2 = Double.valueOf(amount)/2;
+        return String.valueOf(amount2);
+    }
 
 }

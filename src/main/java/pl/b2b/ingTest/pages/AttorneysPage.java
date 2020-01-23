@@ -29,7 +29,7 @@ public class AttorneysPage {
     private WebElement annex;
     @FindBy(xpath = "//button[@class=\"btn btn-primary btn-block btn-lg js-send\"]")
     private WebElement confirmationButton;
-    @FindBy(xpath = "//strong[@class=\"sum_title no-outline-on-focus\"]")
+    @FindBy(xpath = "//div[@class=\"sum_messages\"]")
     private WebElement text;
     @FindBy(xpath = "//span[@class=\"filter-option pull-left\"]")
     private WebElement arrow;
@@ -75,9 +75,6 @@ public class AttorneysPage {
             WebPageMethods.clickElement(nextButtonAfterRevoke);
             clickConfirmationButton();
         }
-////            int listSize = SingletonWebdriver.getDriver().findElements(By.xpath("//a[@class=\"js-revoke link\"]")).size();
-////            for(int i = 0; i<= listSize; i++){
-////        }
 
     }
     }
