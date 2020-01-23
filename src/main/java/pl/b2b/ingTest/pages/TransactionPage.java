@@ -34,6 +34,9 @@ public class TransactionPage {
     @FindBy(xpath = "//button[@class=\"btn btn-primary btn-block btn-lg js-further\"]")
     private WebElement nextBtn;
 
+    @FindBy(xpath = "//p[@class=\"product-tile__amount\"]")
+    private WebElement currentAmount;
+
     public void clickHolidayButton(){
         WebPageMethods.clickElement(holidaysButton);
     }
@@ -57,5 +60,12 @@ public class TransactionPage {
 
     public void clickNextBtn(){
         WebPageMethods.clickElement(nextBtn);
+    }
+
+    public String getAmount(){
+        String amount = currentAmount.getText();
+        amount = amount.substring(0,amount.length()-3).replace(" ", "").replace(",",".");
+        double amount2 = Double.valueOf(amount)/2;
+        return String.valueOf(amount2);
     }
 }

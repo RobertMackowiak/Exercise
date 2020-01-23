@@ -7,6 +7,8 @@ import pl.b2b.ingTest.pages.*;
 
 import pl.b2b.ingTest.utils.ExcelData;
 import pl.b2b.ingTest.utils.ExcelRaport;
+import pl.b2b.ingTest.utils.MySqlData;
+import pl.b2b.ingTest.utils.WebPageMethods;
 
 import java.util.Iterator;
 import java.util.List;
@@ -18,6 +20,7 @@ public class IngTest {
     HistoryPage historyPage;
     SavingAccount savingAccount;
     AttorneysPage attorneysPage;
+    RecipientsPage recipientsPage;
 //    String name;
 //    String surname;
 //    String address;
@@ -38,6 +41,7 @@ public class IngTest {
         historyPage = new HistoryPage();
         savingAccount = new SavingAccount();
         attorneysPage = new AttorneysPage();
+        recipientsPage = new RecipientsPage();
 //        ExcelData.openExcel("C:\\Users\\B2B\\Desktop\\TestData.xlsx", "Arkusz1");
 //        name = ExcelData.getCellData(1,0);
 //        surname = ExcelData.getCellData(1,1);
@@ -97,10 +101,43 @@ public class IngTest {
 
             Assert.assertEquals(transactionSummary.getConfirmMessage(), "Przelew został wykonany");
             ExcelRaport.writeToExcel("C:\\Users\\B2B\\Desktop\\TestRecord.xlsx", "Arkusz1", name, surname, address, amount, title, true);
+            MySqlData.sendToBase(name, surname, address, amount, title, "Pozytywny");
         }catch(AssertionError|Exception e){
+            WebPageMethods.takeAScreenshot();
             ExcelRaport.writeToExcel("C:\\Users\\B2B\\Desktop\\TestRecord.xlsx", "Arkusz1", name, surname, address, amount, title, false);
+            MySqlData.sendToBase(name, surname, address, amount, title, "Negatywny");
             throw e;
         }
+    }
+
+    @Test
+    public void testIng5(){
+        mainPage.closeCookies();
+        mainPage.clickServicesAndTools();
+        mainPage.clickRecipients();
+        recipientsPage.useSearchRecipients("Tomek K");
+        recipientsPage.clickArrowContainer();
+        recipientsPage.clickDetailsButton();
+        recipientsPage.inputPhoneNumber("456456321");
+        recipientsPage.clickNameField();
+        recipientsPage.clickSaveButton();
+        attorneysPage.clickConfirmationButton();
+        Assert.assertEquals(attorneysPage.getMessage(), "Odbiorca został zaktualizowany");
+
+    }
+
+    @Test
+    @Parameters({"name", "surname", "address", "title"})
+    public void testIng6(String name, String surname, String address, String title){
+        mainPage.closeCookies();
+        mainPage.clickExecuteTransactionBtn();
+        transactionPage.clickHolidayButton();
+        transactionPage.copyMyAccountNumber();
+        transactionPage.clickRegularTransferBtn();
+        transactionPage.putNameAndAddress(name + " " + surname + " " + address);
+        transactionPage.putAmount(transactionPage.getAmount());
+        transactionPage.putTitle(title);
+
     }
 
     @Test (dependsOnMethods = "testIng")
@@ -113,10 +150,10 @@ public class IngTest {
 
 
 
-    @AfterTest
-    public void afterTest(){
-        ExcelData.closeFile();
-        SingletonWebdriver.quitDriver();
+//    @AfterTest
+//    public void afterTest(){
+////        ExcelData.closeFile();
+//        SingletonWebdriver.quitDriver();
 
-    }
+//    }
 }

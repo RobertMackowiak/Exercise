@@ -27,6 +27,12 @@ public class MainPage {
     @FindBy(xpath = "//span[@class=\"name row_name--S\"]")
     private WebElement openSavingAccount;
 
+    @FindBy(id="menu-financemeter")
+    private WebElement servicesAndTools;
+
+    @FindBy(id="servicesRecipient")
+    private WebElement recipients;
+
     public void closeCookies(){
         SingletonWebdriver.getWait().until(ExpectedConditions.visibilityOf(demoInfo));
         if (!SingletonWebdriver.getDriver().findElements(By.xpath("//a[@class=\"cookie-policy_close js-close-cookie glyphicon glyphicon-ing-close\"]")).isEmpty()) {
@@ -44,6 +50,13 @@ public class MainPage {
 
     public void clickOpenSavingAccount(){
         WebPageMethods.clickElement(openSavingAccount);
+    }
+
+    public void clickServicesAndTools(){
+        WebPageMethods.clickElement(servicesAndTools);
+    }
+    public void clickRecipients(){
+        WebPageMethods.clickElement(recipients);
     }
 
 }
