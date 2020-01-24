@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pl.b2b.SingletonWebdriver;
@@ -44,6 +45,12 @@ public class WebPageMethods {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public static void setSlider(WebElement element, int x, int y){
+        Actions move = new Actions(SingletonWebdriver.getDriver());
+        move.dragAndDropBy(element, x, y).build().perform();
 
     }
 }

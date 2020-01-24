@@ -38,6 +38,9 @@ public class MainPage {
     @FindBy (id="servicesRecipient")
     private WebElement recipientButton;
 
+    @FindBy (id="servicesGoals")
+    private WebElement serviceGoals;
+
 //    public void closeCookie(){
 //        SingletonWebdriver.getWait().until(ExpectedConditions.elementToBeClickable(cookieButton));
 //        cookieButton.click();
@@ -56,7 +59,7 @@ public class MainPage {
         WebPageMethods.clickElement(transactionButton);
     }
 
-    public void clickMyFinansesButton(){
+    public void clickMyFinancesButton(){
         WebPageMethods.clickElement(myFinanses);
     }
 
@@ -65,12 +68,19 @@ public class MainPage {
         WebPageMethods.clickElement(mySavings);
     }
 
-    public void clickRecipientButton(){
+    public void clickFinanceMeterButton() {
         SingletonWebdriver.getWait().until(ExpectedConditions.elementToBeClickable(financeMeter));
         WebPageMethods.clickElement(financeMeter);
+
+    }
+    public void clickRecipientButton() {
         SingletonWebdriver.getWait().until(ExpectedConditions.elementToBeClickable(recipientButton));
         WebPageMethods.clickElement(recipientButton);
 
 
+    }
+    public void clickserviceGoalsButton(){
+        SingletonWebdriver.getWait().until(ExpectedConditions.elementToBeClickable(serviceGoals));
+        WebPageMethods.clickElement(serviceGoals);
     }
 }

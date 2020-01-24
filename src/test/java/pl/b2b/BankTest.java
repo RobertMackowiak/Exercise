@@ -2,6 +2,7 @@ package pl.b2b;
 
 
 import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.annotations.*;
 import pl.b2b.pages.*;
 import pl.b2b.utils.ExcelData;
@@ -20,6 +21,7 @@ public class BankTest {
     AttorneysPage attorneysPage;
     RecipientPage recipientPage;
     EditSummaryPage editSummaryPage;
+    GoalsPage goalsPage;
 
     String name;
     String surname;
@@ -34,6 +36,13 @@ public class BankTest {
         return list.iterator();
     }
 
+    @DataProvider
+    public Iterator<Object[]> loadData(){
+        List<Object[]> list = MySqlData.getFromBase();
+
+        return list.iterator();
+    }
+
     @BeforeTest
     public void before() {
         mainpage = new MainPage();
@@ -42,6 +51,7 @@ public class BankTest {
         attorneysPage = new AttorneysPage();
         recipientPage = new RecipientPage();
         editSummaryPage = new EditSummaryPage();
+        goalsPage = new GoalsPage();
 
 //        ExcelData.openExcel("C:\\Users\\b2b_2\\Desktop\\TestData.xlsx", "Arkusz1");
 //        name = ExcelData.getCellData(1, 0);
@@ -53,11 +63,11 @@ public class BankTest {
 
     }
 
-    @AfterTest
-    public void after() {
-        SingletonWebdriver.quitDriver();
-//        ExcelData.closeFile();
-    }
+//    @AfterTest
+//    public void after() {
+//        SingletonWebdriver.quitDriver();
+////        ExcelData.closeFile();
+//    }
 
     @Test (priority = -1, dataProvider = "dataProvider")
     public void bankTest1(String name, String surname, String address, String amount, String title) {
@@ -94,7 +104,7 @@ public class BankTest {
     @Test
     public void bankTest2(){
         mainpage.closeCookies();
-        mainpage.clickMyFinansesButton();
+        mainpage.clickMyFinancesButton();
         mainpage.clickMySavingsButton();
         savingsAccount.clickAttorneysButton();
         attorneysPage.addAttorneyClick();
@@ -109,7 +119,7 @@ public class BankTest {
 
     @Test (dependsOnMethods = "bankTest2")
     public void bankTest3(){
-        mainpage.clickMyFinansesButton();
+        mainpage.clickMyFinancesButton();
         mainpage.clickMySavingsButton();
         savingsAccount.clickAttorneysButton();
         attorneysPage.clickRevokeButton();
@@ -117,7 +127,7 @@ public class BankTest {
         attorneysPage.clickConfirmButton();
         Assert.assertTrue(attorneysPage.getText().equals("Pełnomocnik został usunięty"));
 
-        mainpage.clickMyFinansesButton();
+        mainpage.clickMyFinancesButton();
         mainpage.clickMySavingsButton();
         savingsAccount.clickAttorneysButton();
         attorneysPage.clickRevokeButton();
@@ -131,6 +141,7 @@ public class BankTest {
     public void bankTest4(){
         String number = "600 600 600";
         mainpage.closeCookies();
+        mainpage.clickFinanceMeterButton();
         mainpage.clickRecipientButton();
         recipientPage.inputRecipient("Tomek K.");
         recipientPage.selectRecipientButton();
@@ -142,16 +153,41 @@ public class BankTest {
 
     }
 
-    @Test
-    @Parameters({"name","surname", "address","title"})
+    @Test (dataProvider = "loadData")
     public void bankTest5(String name, String surname, String address, String title){
         mainpage.closeCookies();
+        Reporter.log("Cookie closed");
         mainpage.clickTransactionButton();
+        Reporter.log("Transaction window open", true);
         transactionPage.clickWakacjeButton();
+        Reporter.log("Holiday button clicked", true);
         transactionPage.getMoney();
         transactionPage.regularTransactionButtonClick();
         transactionPage.getIbanNumber();
         transactionPage.setTransactionFields(name + " " + surname + " " + address, transactionPage.getMoney(), title);
+        transactionPage.furtherButtonClick();
+        Assert.assertTrue(transactionPage.ibanNumberCheck());
+        transactionPage.confirmButtonClick();
+        Assert.assertEquals(transactionPage.getConfirmMessage(), "Przelew został wykonany");
+
+    }
+
+    @Test
+    public void bankTest6(){
+        mainpage.closeCookies();
+        mainpage.clickFinanceMeterButton();
+        mainpage.clickserviceGoalsButton();
+        goalsPage.clickAddGoalButton();
+        goalsPage.clickChildButton();
+        goalsPage.setNewNameField("Bachor");
+        goalsPage.setAmountField("2500");
+        goalsPage.clickNextButton();
+        goalsPage.clickCheckbox();
+        goalsPage.moveSlider1();
+//        goalsPage.clickMonthField();
+        goalsPage.moveSlider2();
+
+
     }
 
 }

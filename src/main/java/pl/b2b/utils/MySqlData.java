@@ -1,9 +1,8 @@
 package pl.b2b.utils;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MySqlData {
 
@@ -27,21 +26,35 @@ public class MySqlData {
 
     }
 
-    public static void takeFromBase(String name, String surname, String address, String amount, String title, String result) {
+    public static List<Object[]> getFromBase() {
+        List<Object[]> list = new ArrayList<>();
 
         try {
             Connection connection = DriverManager.getConnection(url, user, password);
             Statement statement = connection.createStatement();
-            String sql = "select name, surname, address, amount, title from testowa where id=1";
+            String sql = "select name, surname, address, title from testowa limit 2";
 //            sql = String.format(sql, name, surname, address, amount, title, result); // String.format podmienia nam '%s' na podane przez nas zmienne
 //            statement.executeUpdate(sql);
-            statement.getResultSet();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()){
+                String name = rs.getString("name");
+                String surname = rs.getString("surname");
+                String address = rs.getString("address");
+                String title = rs.getString("title");
+
+                Object ob[] = {name, surname, address, title} ;
+                list.add(ob);
+            }
+
+
             connection.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+        return list;
     }
 
 }
