@@ -7,8 +7,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SingletonWebdriver {
 
-    static WebDriver driver;
-    static WebDriverWait wait;
+    private static WebDriver driver;
+    private static WebDriverWait wait;
 
     public static WebDriver getDriver() {
         if (driver == null) {
@@ -24,5 +24,10 @@ public class SingletonWebdriver {
             wait = new WebDriverWait(driver, 10);
         }
         return wait;
+    }
+
+    public static void quitDriver(){
+        getDriver().quit();
+        driver = null;
     }
 }
