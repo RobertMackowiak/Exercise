@@ -4,14 +4,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import pl.b2b.SingletonWebdriver;
+import pl.b2b.SingletonWebDriver;
 import pl.b2b.bankIng.utils.WebPageMethods;
 
 public class HistoryOfTransactionPage {
     private String lastAssertion;
     private String moneyTransfer;
     public HistoryOfTransactionPage() {
-        PageFactory.initElements(SingletonWebdriver.getDriver(), this);
+        PageFactory.initElements(SingletonWebDriver.getDriver(), this);
     }
 
     @FindBy(xpath = "(//li[@class=\"row grid-row transactions-history-list-row row--cursor-pointer\"])[1]")
@@ -28,7 +28,7 @@ public class HistoryOfTransactionPage {
     }
 
     public void checkAccountAgain(){
-        SingletonWebdriver.getWait().until(ExpectedConditions.visibilityOf(lastTransaction));
+        SingletonWebDriver.getWait().until(ExpectedConditions.visibilityOf(lastTransaction));
         lastAssertion = checkAccountNumberAgain.getText();
     }
 

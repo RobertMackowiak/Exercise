@@ -4,12 +4,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import pl.b2b.SingletonWebdriver;
+import pl.b2b.SingletonWebDriver;
 
 public class ExecuteTranstactionPage {
-String accNumber;
+    String accNumber;
+
     public ExecuteTranstactionPage() {
-        PageFactory.initElements(SingletonWebdriver.getDriver(), this);
+        PageFactory.initElements(SingletonWebDriver.getDriver(), this);
     }
 
     @FindBy(xpath = "//p[@class=\"product-tile__iban is-long\"]")
@@ -22,8 +23,8 @@ String accNumber;
     private WebElement normalTransaction;
 
     public void copyAccountNumber() {
-        SingletonWebdriver.getWait().until(ExpectedConditions.visibilityOf(accountNumber));
-       accNumber = accountNumber.getText();
+        SingletonWebDriver.getWait().until(ExpectedConditions.visibilityOf(accountNumber));
+        accNumber = accountNumber.getText();
     }
 
     public String getAccNumber() {
@@ -32,12 +33,12 @@ String accNumber;
     }
 
     public void clickHolidayButton() {
-        SingletonWebdriver.getWait().until(ExpectedConditions.elementToBeClickable(holidayButton));
+        SingletonWebDriver.getWait().until(ExpectedConditions.elementToBeClickable(holidayButton));
         holidayButton.click();
     }
 
     public void clickNormalTransaction() {
-        SingletonWebdriver.getWait().until(ExpectedConditions.elementToBeClickable(normalTransaction));
+        SingletonWebDriver.getWait().until(ExpectedConditions.elementToBeClickable(normalTransaction));
         normalTransaction.click();
     }
 }

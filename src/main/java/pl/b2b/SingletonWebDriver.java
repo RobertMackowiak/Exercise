@@ -5,7 +5,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SingletonWebdriver {
+public class SingletonWebDriver {
 
     private static WebDriver driver;
     private static WebDriverWait wait;

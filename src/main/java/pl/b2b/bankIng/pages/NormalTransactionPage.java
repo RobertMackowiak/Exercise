@@ -1,18 +1,18 @@
 package pl.b2b.bankIng.pages;
 
-import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import pl.b2b.SingletonWebdriver;
+import pl.b2b.SingletonWebDriver;
+import pl.b2b.bankIng.utils.WebPageMethods;
 
 public class NormalTransactionPage {
     public NormalTransactionPage() {
-        PageFactory.initElements(SingletonWebdriver.getDriver(), this);
+        PageFactory.initElements(SingletonWebDriver.getDriver(), this);
     }
+
 
     @FindBy(id = "transfer-recipient-name")
     private WebElement nameAndAdressLabel;
@@ -32,12 +32,18 @@ public class NormalTransactionPage {
     @FindBy(xpath = "strong[class=\"sum_title no-outline-on-focus\"]")
     private WebElement title;
 
-    public void putInTextInLabels(String name ,String surname, String address) {
+    @FindBy(id = "menu-history")
+    private WebElement historyButton;
+
+    @FindBy(xpath = "//p[@class=\"product-tile__amount\"]")
+    private WebElement getFullAmount;
+
+    public void putInTextInLabels(String name, String surname, String address) {
         nameAndAdressLabel.sendKeys("Bonifacy, Jerozolimska");
-        amountLabel.sendKeys("300");
+        amountLabel.sendKeys(get50cash());
         titleLabel.sendKeys("szampany");
 
-        JavascriptExecutor jse = (JavascriptExecutor) SingletonWebdriver.getDriver();
+        JavascriptExecutor jse = (JavascriptExecutor) SingletonWebDriver.getDriver();
         jse.executeScript("window.scrollBy(0,250)");
 
         nextButton.click();
@@ -45,11 +51,24 @@ public class NormalTransactionPage {
     }
 
     public void clickConfirmButton() {
-        SingletonWebdriver.getWait().until(ExpectedConditions.elementToBeClickable(confirmButton));
+        SingletonWebDriver.getWait().until(ExpectedConditions.elementToBeClickable(confirmButton));
         confirmButton.click();
     }
 
-    public void checkTitle(){
+    public void checkTitle() {
+
+    }
+
+    public void clickHistoryButton() {
+        WebPageMethods.clickElement(historyButton);
+    }
+
+    public String get50cash() {
+        String text = getFullAmount.getText();
+
+        text = text.replaceAll(" ", "").replaceAll(",", ".").replaceAll("PLN","");
+        double textToDouble = Double.parseDouble(text) / 2;
+        return String.valueOf(textToDouble);
 
     }
 
