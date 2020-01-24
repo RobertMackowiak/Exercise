@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import pl.b2b.ingTest.MainPage;
 import pl.b2b.ingTest.MakeTransactionPage;
 import pl.b2b.ingTest.NormalTransactionSummaryPage;
+import pl.b2b.ingTest.SavingsPage;
 import pl.b2b.utils.ExcelData;
 import pl.b2b.utils.ExcelRaport;
 import pl.b2b.utils.MySqlData;
@@ -23,6 +24,7 @@ public class IngTest {
     MakeTransactionPage makeTransactionPage;
     NormalTransactionSummaryPage normalTransactionSummaryPage;
     ExcelRaport excelRaport;
+    SavingsPage savingsPage;
 
 
     @DataProvider
@@ -37,13 +39,14 @@ public class IngTest {
         makeTransactionPage = new MakeTransactionPage();
         normalTransactionSummaryPage = new NormalTransactionSummaryPage();
         excelRaport = new ExcelRaport();
+        savingsPage = new SavingsPage();
         SingletonWebdriver.getDriver().get("https://login.ingbank.pl/mojeing/demo/#home");
     }
 
     @AfterTest
     public void after() {
-        SingletonWebdriver.quitDriver();
-        ExcelData.closeFiles();
+//        SingletonWebdriver.quitDriver();
+//        ExcelData.closeFiles();
     }
 
     @Test(dataProvider = "getDataFromExcel")
@@ -86,6 +89,22 @@ public class IngTest {
         mainPage.waitForCookies();
         mainPage.clickOnMyFinances();
         mainPage.clickOnSavingAccount();
+
+    }
+
+    @Test
+    public void sliderTest(){
+        mainPage.waitForCookies();
+        mainPage.clickOnUslugi();
+        mainPage.clickOnCeleOsczednosciowe();
+        savingsPage.clickOnNewGoal();
+        savingsPage.clickOnChildGoal();
+        savingsPage.setNewGoalName("szkoła");
+        savingsPage.setNewGoalAmount("100000");
+        savingsPage.clickOnForward();
+        savingsPage.slideSlider();
+
+
 
     }
 

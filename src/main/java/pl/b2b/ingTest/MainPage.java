@@ -30,6 +30,20 @@ public class MainPage {
     @FindBy(xpath = "//span[@class=\"name row_name--S\"]")
     private WebElement savingAccount;
 
+    @FindBy(id="menu-financemeter")
+    private WebElement uslugiIcostam;
+
+    @FindBy(id = "servicesGoals")
+    private WebElement celeOszczednosciowe;
+
+    public void clickOnCeleOsczednosciowe(){
+        WebPageMethods.clickElement(celeOszczednosciowe);
+    }
+
+    public void clickOnUslugi(){
+        WebPageMethods.clickElement(uslugiIcostam);
+    }
+
 
     public void clickOnWykonaj() {
         WebPageMethods.clickElement(wykonajTrans);
