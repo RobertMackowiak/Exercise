@@ -33,6 +33,9 @@ public class MainPage {
     @FindBy(id="servicesRecipient")
     private WebElement recipients;
 
+    @FindBy(id="servicesGoals")
+    private WebElement servicesGoals;
+
     public void closeCookies(){
         SingletonWebdriver.getWait().until(ExpectedConditions.visibilityOf(demoInfo));
         if (!SingletonWebdriver.getDriver().findElements(By.xpath("//a[@class=\"cookie-policy_close js-close-cookie glyphicon glyphicon-ing-close\"]")).isEmpty()) {
@@ -57,6 +60,9 @@ public class MainPage {
     }
     public void clickRecipients(){
         WebPageMethods.clickElement(recipients);
+    }
+    public void clickServicesGoals(){
+        WebPageMethods.clickElement(servicesGoals);
     }
 
 }

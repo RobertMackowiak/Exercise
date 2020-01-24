@@ -1,6 +1,7 @@
 package pl.b2b.ingTest.tests;
 
 import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.annotations.*;
 import pl.b2b.SingletonWebdriver;
 import pl.b2b.ingTest.pages.*;
@@ -21,6 +22,7 @@ public class IngTest {
     SavingAccount savingAccount;
     AttorneysPage attorneysPage;
     RecipientsPage recipientsPage;
+    GoalsPage goalsPage;
 //    String name;
 //    String surname;
 //    String address;
@@ -33,6 +35,12 @@ public class IngTest {
         return List.iterator();
     }
 
+    @DataProvider
+    public Iterator<Object[]> dataProviderSql(){
+        List<Object[]> list = MySqlData.getFromBase();
+        return list.iterator();
+    }
+
     @BeforeTest
     public void beforeTest(){
         mainPage = new MainPage();
@@ -42,6 +50,7 @@ public class IngTest {
         savingAccount = new SavingAccount();
         attorneysPage = new AttorneysPage();
         recipientsPage = new RecipientsPage();
+        goalsPage = new GoalsPage();
 //        ExcelData.openExcel("C:\\Users\\B2B\\Desktop\\TestData.xlsx", "Arkusz1");
 //        name = ExcelData.getCellData(1,0);
 //        surname = ExcelData.getCellData(1,1);
@@ -126,18 +135,39 @@ public class IngTest {
 
     }
 
-    @Test
-    @Parameters({"name", "surname", "address", "title"})
-    public void testIng6(String name, String surname, String address, String title){
+    @Test (dataProvider = "dataProviderSql")
+//    @Parameters({"name", "surname", "address", "title"})
+    public void testIng6(String name, String surname, String address, String title) {
         mainPage.closeCookies();
+        Reporter.log("Cookies closed");
         mainPage.clickExecuteTransactionBtn();
+        Reporter.log("Transaction window open");
         transactionPage.clickHolidayButton();
+        Reporter.log("Holiday account choosed");
         transactionPage.copyMyAccountNumber();
         transactionPage.clickRegularTransferBtn();
+        Reporter.log("Regular Transfer Button clicked");
         transactionPage.putNameAndAddress(name + " " + surname + " " + address);
         transactionPage.putAmount(transactionPage.getAmount());
         transactionPage.putTitle(title);
+    }
 
+    @Test
+    public void testIng7Dziecko(){
+        mainPage.closeCookies();
+        mainPage.clickServicesAndTools();
+        mainPage.clickServicesGoals();
+        goalsPage.clickAddGoalButton();
+        goalsPage.clickChildGoalButton();
+        goalsPage.inputGoalName("na wakacje");
+        goalsPage.inputAmount("3000");
+        goalsPage.clickNextButton();
+        goalsPage.clickStartAmountCheckbox();
+        goalsPage.moveSlider1();
+        goalsPage.clickRandomClick();
+        goalsPage.moveSlider2();
+//        goalsPage.clickNextButton();
+//        goalsPage.clickNextButton();
     }
 
     @Test (dependsOnMethods = "testIng")
@@ -154,6 +184,6 @@ public class IngTest {
 //    public void afterTest(){
 ////        ExcelData.closeFile();
 //        SingletonWebdriver.quitDriver();
-
+//
 //    }
 }

@@ -1,9 +1,8 @@
 package pl.b2b.ingTest.utils;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+        import java.sql.*;
+        import java.util.ArrayList;
+        import java.util.List;
 
 public class MySqlData {
 
@@ -22,5 +21,27 @@ public class MySqlData {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public static List<Object[]> getFromBase(){
+        List<Object[]> list = new ArrayList<>();
+        try {
+            Connection connection = DriverManager.getConnection(url, user, password);
+            Statement statement = connection.createStatement();
+            String sql = "select name, surname, adress, title from testowa limit 3;";
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()){
+                String name = rs.getString("name");
+                String surname = rs.getString("surname");
+                String adress = rs.getString("adress");
+                String title = rs.getString("title");
+
+                Object ob[] = {name, surname, adress, title};
+                list.add(ob);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

@@ -5,13 +5,13 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pl.b2b.SingletonWebdriver;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -25,6 +25,10 @@ public class WebPageMethods {
     public static void sendKeysToElement(WebElement element, String message){
         webDriverWait.until(ExpectedConditions.visibilityOf(element));
         element.sendKeys(message);
+    }
+    public static void moveSlider(WebElement element, int x, int y){
+        Actions move = new Actions(SingletonWebdriver.getDriver());
+        move.dragAndDropBy(element, x, y).build().perform();
     }
     public static String localTime(){
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH-mm-ss");
