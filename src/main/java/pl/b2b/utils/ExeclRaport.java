@@ -7,6 +7,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExeclRaport {
     private static XSSFWorkbook exelWorkbook; // cały arkusz kalkulacyjny
@@ -17,28 +19,42 @@ public class ExeclRaport {
 
     public static void wrihtToExcell (String path, String sheet, String name, String surname, String address, String cash, String title, boolean result){
         try {
+            List<String> lista = new ArrayList<>();
+            lista.add(name);
+            lista.add(surname);
+            lista.add(address);
+            lista.add(cash);
+            lista.add(title);
+            if (result){
+                lista.add("Pozytywny");
+
+            }else {
+                lista.add("Negatywny");
+            }
             exelFile = new FileInputStream(path);
             exelWorkbook = new XSSFWorkbook(exelFile); // tworzymy obiekt exela
             exelSheet = exelWorkbook.getSheet(sheet); // otwieramy arkusz
             int exelLastRow = exelSheet.getLastRowNum() + 1; //puste miejsce w exelu gdzie możemy zapisać dane testowe
             exelRow = exelSheet.createRow(exelLastRow);
-            exelCell = exelRow.createCell(0);
-            exelCell.setCellValue(name);
-            exelCell =exelRow.createCell(1);
-            exelCell.setCellValue(surname);
-            exelCell = exelRow.createCell(2);
-            exelCell.setCellValue(address);
-            exelCell =exelRow.createCell(3);
-            exelCell.setCellValue(cash);
-            exelCell = exelRow.createCell(4);
-            exelCell.setCellValue(title);
-            exelCell = exelRow.createCell(5);
-            if (result){
-                exelCell.setCellValue("Pozytywny");
+            for (int i = 0; i < lista.size(); i++){
 
-            }else {
-                exelCell.setCellValue("Negatywny");
+                exelCell = exelRow.createCell(i);
+                exelCell.setCellValue(lista.get(i));
             }
+
+//            exelRow = exelSheet.createRow(exelLastRow);
+//            exelCell = exelRow.createCell(0);
+//            exelCell.setCellValue(name);
+//            exelCell =exelRow.createCell(1);
+//            exelCell.setCellValue(surname);
+//            exelCell = exelRow.createCell(2);
+//            exelCell.setCellValue(address);
+//            exelCell =exelRow.createCell(3);
+//            exelCell.setCellValue(cash);
+//            exelCell = exelRow.createCell(4);
+//            exelCell.setCellValue(title);
+//            exelCell = exelRow.createCell(5);
+
 
             FileOutputStream fileOutputStream = new FileOutputStream(path);
                 exelWorkbook.write(fileOutputStream);

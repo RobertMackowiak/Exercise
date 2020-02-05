@@ -35,4 +35,5 @@ public class SingletonWebdriver {
         getDriver().quit();
         driver = null;
     }
+
 }
